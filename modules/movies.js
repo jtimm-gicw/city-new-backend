@@ -1,10 +1,12 @@
 'use strict';
-
+// impot the axios library to make API requests
 const axios = require('axios');
 
+// Lab 8: Create a function to get movies from the API
 async function getMovies(searchQuery) {
   const url = `https://api.themoviedb.org/3/search/movie`;
 
+  // Lab 8: ADD Axios to make the API request with query parameters
   const response = await axios.get(url, {
     params: {
       api_key: process.env.MOVIE_API_KEY,
@@ -16,9 +18,10 @@ async function getMovies(searchQuery) {
 }
 
 function parseMovies(movieData) {
-  return movieData.results.map(movie => new Movie(movie));
-}
+  return movieData.results.map(movie => new Movie(movie)); // "movie" represents ONE movie at a time, and we return a cleaned-up movie object
 
+}
+// Lab 8: Create a Movie class to clean up the data we get back from the API
 class Movie {
   constructor(movie) {
     this.title = movie.title;
