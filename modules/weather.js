@@ -1,7 +1,7 @@
 'use strict';
 
 const axios = require('axios');
-let cache = require('./cache.js') || {};
+let cache = require('./cache.js');
 // let cache = {}; // 👉 This removes dependency risk entirely.
 
 async function getWeather(latitude, longitude) {
@@ -12,14 +12,15 @@ async function getWeather(latitude, longitude) {
     const url = `https://api.open-meteo.com/v1/forecast?latitude=${latitude}&longitude=${longitude}&daily=temperature_2m_max,temperature_2m_min,weathercode&timezone=auto`;   
     // This is a fix for API rejection due to missing or invalid API key. 
 
-    // CACHE HIT
+    // CACHE HIT --> Is this searched term already in cache
     if (cache[key] && (Date.now() - cache[key].timestamp < 50000)) {
-      console.log('Cache hit');
-      return cache[key].data;
+      console.log('Cache hit'); // Found!
+      return cache[key].data; // When/if found, return found data
     }
 
-    console.log('Cache miss');
+    console.log('Cache miss'); // NOT found
 
+    // Since it was not found, the requests runs
     const response = await axios.get(url);
     const parsed = parseWeather(response.data);
 

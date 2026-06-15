@@ -3,7 +3,6 @@
 // import the axios library to make API requests
 const axios = require('axios');
 
-// Lab 10: add cache check to modules
 // ======================================
 // CACHE IMPORT
 // ======================================
@@ -15,13 +14,18 @@ const axios = require('axios');
 // - Without this, every file would have its own cache (not shared)
 // - This creates a simple in-memory caching system for API responses
 //
-let cache = require('./cache.js');
-// let cache = {}; // 👉 This removes dependency risk entirely.
+let cache = require('./cache.js') || {};
+// let cache = {}; // 👉 fallback option (not recommended in multi-file apps)
 
 /*
 ROUTES FILE RESPONSIBILITY
 
 This file contains all movie-related routes.
+
+server.js is responsible for:
+- starting the server
+- registering routes
+- handling errors
 
 movies.js is responsible for:
 - receiving movie requests
@@ -118,3 +122,4 @@ class Movie {
 
 // Export function so server.js can use it
 module.exports = getMovies;
+

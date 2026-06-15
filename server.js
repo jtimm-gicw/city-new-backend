@@ -8,8 +8,8 @@ const express = require('express');
 const cors = require('cors');
 
 // Our Dependencies
-const weather = require('./modules/weather.js');
-const movies = require('./modules/movies.js');// Lab 8: ADD Movie Module
+const weather = require('./modules/weather.js');// Lab 8: ADD Weather Module
+const movies = require('./modules/old-movies.js');// Lab 8: ADD Movie Module
 
 
 // Application Setup
@@ -18,10 +18,16 @@ const app = express();
 app.use(cors());
 
 
+// server.js is responsible for:
+// - starting the server
+// - registering routes
+// - handling errors
+// To simplify we novie the route logic like API requests, cache checks, and returns the data structure requested
+
 app.get('/weather', weatherHandler);
 app.get('/movies', handleMovies);// Lab 8: ADD Movie Route
 
-// MUST BE LAST
+// MUST BE LAST in routes list
 app.use('/', notFoundHandler);
 
 // Weather Handler
